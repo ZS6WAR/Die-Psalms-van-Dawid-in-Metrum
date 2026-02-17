@@ -13,8 +13,12 @@ Hierdie werk mag vrylik gekopieer, versprei, gedruk, elektronies versprei, herpu
 Hierdie toestemming word gegee met die doel om die metriese Psalms so wyd moontlik beskikbaar te stel tot eer van God en tot opbou van Sy Kerk.
 
 Vir meer informasie, skrywe aan:
-Ds. Warren King
-Posbus 2363
-Secunda
-2302
+Ds. Warren King,
+
+Posbus 2363,
+
+Secunda,
+
+2302,
+
 wking777(at)gmail.com
