@@ -14,7 +14,11 @@ Hierdie toestemming word gegee met die doel om die metriese Psalms so wyd moontl
 
 Vir meer informasie, skrywe aan:
 Ds. Warren King
+
 Posbus 2363
+
 Secunda
+
 2302
+
 wking777(at)gmail.com
