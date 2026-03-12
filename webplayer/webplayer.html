@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="af">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psalm Speler</title>
+    <style>
+        .psalm-container {
+            display: flex;
+            justify-content: center;
+            min-height: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .psalm-player {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .psalm-player h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .psalm-player select, .psalm-player input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .psalm-player button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .psalm-player button:hover {
+            background-color: #45a049;
+        }
+        .psalm-player audio {
+            margin-top: 20px;
+            width: 80%;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+        .psalm-text {
+            margin-top: 20px;
+            text-align: left;
+            font-size: 16px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .psalm-score {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="psalm-container">
+        <!-- Metriese Psalms Player -->
+        <div class="psalm-player metriese">
+            <h2>Metriese Psalms</h2>
+            <label for="metriese-psalm-select">Kies die Psalm:</label>
+            <select id="metriese-psalm-select">
+                <option value="" data-verses="0" data-text-url="" data-score-url="" data-audio-url="">Kies 'n Psalm</option>
+                <option value="Psalm001" data-verses="6"  data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm001m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm001m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm001m.mp3">Psalm 1</option>
+                <option value="Psalm002" data-verses="8"  data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm002m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm002m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm002m.mp3">Psalm 2</option>
+                <option value="Psalm003" data-verses="5"  data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm003m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm003m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm003m.mp3">Psalm 3</option>
+                <option value="Psalm004" data-verses="6"  data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm004m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm004m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm004m.mp3">Psalm 4</option>
+                <option value="Psalm005" data-verses="10" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm005m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm005m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm005m.mp3">Psalm 5</option>
+                <option value="Psalm006" data-verses="9"  data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm006m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm006m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm006m.mp3">Psalm 6</option>
+                <option value="Psalm007" data-verses="16" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm007m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm007m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm007m.mp3">Psalm 7</option>
+                <option value="Psalm008" data-verses="7"  data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm008m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm008m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm008m.mp3">Psalm 8</option>
+                <option value="Psalm009" data-verses="16" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm009m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm009m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm009m.mp3">Psalm 9</option>
+                <option value="Psalm010" data-verses="18" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm010m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm010m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm010m.mp3">Psalm 10</option>
+                <option value="Psalm011" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm011m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm011m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm011m.mp3">Psalm 11</option>
+                <option value="Psalm012" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm012m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm012m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm012m.mp3">Psalm 12</option>
+                <option value="Psalm013" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm013m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm013m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm013m.mp3">Psalm 13</option>
+                <option value="Psalm014" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm014m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm014m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm014m.mp3">Psalm 14</option>
+                <option value="Psalm015" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm015m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm015m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm015m.mp3">Psalm 15</option>
+                <option value="Psalm016" data-verses="10" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm016m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm016m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm016m.mp3">Psalm 16</option>
+                <option value="Psalm017" data-verses="14" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm017m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm017m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm017m.mp3">Psalm 17</option>
+                <option value="Psalm018" data-verses="40" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm018m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm018m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm018m.mp3">Psalm 18</option>
+                <option value="Psalm019" data-verses="13" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm019m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm019m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm019m.mp3">Psalm 19</option>
+                <option value="Psalm020" data-verses="7" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm020m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm020m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm020m.mp3">Psalm 20</option>
+                <option value="Psalm021" data-verses="12" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm021m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm021m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm021m.mp3">Psalm 21</option>
+                <option value="Psalm022" data-verses="27" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm022m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm022m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm022m.mp3">Psalm 22</option>
+                <option value="Psalm023" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm023m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm023m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm023m.mp3">Psalm 23</option>
+                <option value="Psalm024" data-verses="10" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm024m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm024m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm024m.mp3">Psalm 24</option>
+                <option value="Psalm025" data-verses="19" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm025m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm025m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm025m.mp3">Psalm 25</option>
+                <option value="Psalm026" data-verses="7" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm026m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm026m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm026m.mp3">Psalm 26</option>
+                <option value="Psalm027" data-verses="16" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm027m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm027m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm027m.mp3">Psalm 27</option>
+                <option value="Psalm028" data-verses="9" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm028m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm028m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm028m.mp3">Psalm 28</option>
+                <option value="Psalm029" data-verses="9" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm029m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm029m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm029m.mp3">Psalm 29</option>
+                <option value="Psalm030" data-verses="11" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm030m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm030m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm030m.mp3">Psalm 30</option>
+                <option value="Psalm031" data-verses="24" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm031m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm031m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm031m.mp3">Psalm 31</option>
+                <option value="Psalm032" data-verses="12" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm032m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm032m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm032m.mp3">Psalm 32</option>
+                <option value="Psalm033" data-verses="16" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm033m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm033m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm033m.mp3">Psalm 33</option>
+                <option value="Psalm034" data-verses="15" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm034m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm034m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm034m.mp3">Psalm 34</option>
+                <option value="Psalm035" data-verses="24" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm035m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm035m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm035m.mp3">Psalm 35</option>
+                <option value="Psalm036" data-verses="11" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm036m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm036m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm036m.mp3">Psalm 36</option>
+                <option value="Psalm037" data-verses="35" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm037m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm037m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm037m.mp3">Psalm 37</option>
+                <option value="Psalm038" data-verses="18" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm038m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm038m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm038m.mp3">Psalm 38</option>
+                <option value="Psalm039" data-verses="11" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm039m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm039m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm039m.mp3">Psalm 39</option>
+                <option value="Psalm040" data-verses="19" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm040m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm040m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm040m.mp3">Psalm 40</option>
+                <option value="Psalm041" data-verses="12" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm041m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm041m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm041m.mp3">Psalm 41</option>
+                <option value="Psalm042" data-verses="13" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm042m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm042m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm042m.mp3">Psalm 42</option>
+                <option value="Psalm043" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm043m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm043m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm043m.mp3">Psalm 43</option>
+                <option value="Psalm044" data-verses="19" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm044m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm044m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm044m.mp3">Psalm 44</option>
+                <option value="Psalm045" data-verses="17" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm045m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm045m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm045m.mp3">Psalm 45</option>
+                <option value="Psalm046" data-verses="10" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm046m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm046m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm046m.mp3">Psalm 46</option>
+                <option value="Psalm047" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm047m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm047m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm047m.mp3">Psalm 47</option>
+                <option value="Psalm048" data-verses="11" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm048m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm048m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm048m.mp3">Psalm 48</option>
+                <option value="Psalm049" data-verses="15" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm049m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm049m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm049m.mp3">Psalm 49</option>
+                <option value="Psalm050" data-verses="17" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm050m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm050m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm050m.mp3">Psalm 50</option>
+                <option value="Psalm051" data-verses="16" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm051m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm051m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm051m.mp3">Psalm 51</option>
+                <option value="Psalm052" data-verses="8" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm052m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm052m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm052m.mp3">Psalm 52</option>
+                <option value="Psalm053" data-verses="7" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm053m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm053m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm053m.mp3">Psalm 53</option>
+                <option value="Psalm054" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm054m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm054m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm054m.mp3">Psalm 54</option>
+                <option value="Psalm055" data-verses="18" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm055m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm055m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm055m.mp3">Psalm 55</option>
+                <option value="Psalm056" data-verses="9" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm056m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm056m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm056m.mp3">Psalm 56</option>
+                <option value="Psalm057" data-verses="10" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm057m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm057m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm057m.mp3">Psalm 57</option>
+                <option value="Psalm058" data-verses="11" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm058m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm058m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm058m.mp3">Psalm 58</option>
+                <option value="Psalm059" data-verses="14" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm059m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm059m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm059m.mp3">Psalm 59</option>
+                <option value="Psalm060" data-verses="11" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm060m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm060m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm060m.mp3">Psalm 60</option>
+                <option value="Psalm061" data-verses="8" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm061m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm061m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm061m.mp3">Psalm 61</option>
+                <option value="Psalm062" data-verses="12" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm062m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm062m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm062m.mp3">Psalm 62</option>
+                <option value="Psalm063" data-verses="8" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm063m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm063m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm063m.mp3">Psalm 63</option>
+                <option value="Psalm064" data-verses="9" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm064m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm064m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm064m.mp3">Psalm 64</option>
+                <option value="Psalm065" data-verses="12" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm065m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm065m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm065m.mp3">Psalm 65</option>
+                <option value="Psalm066" data-verses="14" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm066m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm066m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm066m.mp3">Psalm 66</option>
+                <option value="Psalm067" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm067m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm067m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm067m.mp3">Psalm 67</option>
+                <option value="Psalm068" data-verses="34" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm068m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm068m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm068m.mp3">Psalm 68</option>
+                <option value="Psalm069" data-verses="33" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm069m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm069m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm069m.mp3">Psalm 69</option>
+                <option value="Psalm070" data-verses="2" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm070m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm070m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm070m.mp3">Psalm 70</option>
+                <option value="Psalm071" data-verses="20" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm071m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm071m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm071m.mp3">Psalm 71</option>
+                <option value="Psalm072" data-verses="18" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm072m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm072m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm072m.mp3">Psalm 72</option>
+                <option value="Psalm073" data-verses="21" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm073m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm073m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm073m.mp3">Psalm 73</option>
+                <option value="Psalm074" data-verses="21" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm074m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm074m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm074m.mp3">Psalm 74</option>
+                <option value="Psalm075" data-verses="9" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm075m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm075m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm075m.mp3">Psalm 75</option>
+                <option value="Psalm076" data-verses="11" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm076m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm076m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm076m.mp3">Psalm 76</option>
+                <option value="Psalm077" data-verses="18" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm077m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm077m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm077m.mp3">Psalm 77</option>
+                <option value="Psalm078" data-verses="65" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm078m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm078m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm078m.mp3">Psalm 78</option>
+                <option value="Psalm079" data-verses="13" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm079m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm079m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm079m.mp3">Psalm 79</option>
+                <option value="Psalm080" data-verses="19" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm080m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm080m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm080m.mp3">Psalm 80</option>
+                <option value="Psalm081" data-verses="13" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm081m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm081m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm081m.mp3">Psalm 81</option>
+                <option value="Psalm082" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm082m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm082m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm082m.mp3">Psalm 82</option>
+                <option value="Psalm083" data-verses="12" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm083m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm083m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm083m.mp3">Psalm 83</option>
+                <option value="Psalm084" data-verses="11" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm084m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm084m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm084m.mp3">Psalm 84</option>
+                <option value="Psalm085" data-verses="9" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm085m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm085m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm085m.mp3">Psalm 85</option>
+                <option value="Psalm086" data-verses="15" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm086m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm086m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm086m.mp3">Psalm 86</option>
+                <option value="Psalm087" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm087m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm087m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm087m.mp3">Psalm 87</option>
+                <option value="Psalm088" data-verses="13" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm088m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm088m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm088m.mp3">Psalm 88</option>
+                <option value="Psalm089" data-verses="43" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm089m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm089m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm089m.mp3">Psalm 89</option>
+                <option value="Psalm090" data-verses="16" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm090m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm090m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm090m.mp3">Psalm 90</option>
+                <option value="Psalm091" data-verses="15" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm091m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm091m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm091m.mp3">Psalm 91</option>
+                <option value="Psalm092" data-verses="13" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm092m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm092m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm092m.mp3">Psalm 92</option>
+                <option value="Psalm093" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm093m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm093m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm093m.mp3">Psalm 93</option>
+                <option value="Psalm094" data-verses="19" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm094m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm094m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm094m.mp3">Psalm 94</option>
+                <option value="Psalm095" data-verses="10" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm095m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm095m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm095m.mp3">Psalm 95</option>
+                <option value="Psalm096" data-verses="13" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm096m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm096m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm096m.mp3">Psalm 96</option>
+                <option value="Psalm097" data-verses="11" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm097m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm097m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm097m.mp3">Psalm 97</option>
+                <option value="Psalm098" data-verses="7" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm098m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm098m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm098m.mp3">Psalm 98</option>
+                <option value="Psalm099" data-verses="4" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm099m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm099m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm099m.mp3">Psalm 99</option>
+                <option value="Psalm100" data-verses="2" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm100m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm100m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm100m.mp3">Psalm 100</option>
+                <option value="Psalm101" data-verses="10" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm101m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm101m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm101m.mp3">Psalm 101</option>
+                <option value="Psalm102" data-verses="26" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm102m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm102m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm102m.mp3">Psalm 102</option>
+                <option value="Psalm103" data-verses="19" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm103m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm103m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm103m.mp3">Psalm 103</option>
+                <option value="Psalm104" data-verses="30" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm104m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm104m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm104m.mp3">Psalm 104</option>
+                <option value="Psalm105" data-verses="33" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm105m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm105m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm105m.mp3">Psalm 105</option>
+                <option value="Psalm106" data-verses="39" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm106m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm106m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm106m.mp3">Psalm 106</option>
+                <option value="Psalm107" data-verses="33" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm107m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm107m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm107m.mp3">Psalm 107</option>
+                <option value="Psalm108" data-verses="10" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm108m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm108m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm108m.mp3">Psalm 108</option>
+                <option value="Psalm109" data-verses="27" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm109m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm109m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm109m.mp3">Psalm 109</option>
+                <option value="Psalm110" data-verses="7" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm110m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm110m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm110m.mp3">Psalm 110</option>
+                <option value="Psalm111" data-verses="9" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm111m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm111m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm111m.mp3">Psalm 111</option>
+                <option value="Psalm112" data-verses="10" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm112m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm112m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm112m.mp3">Psalm 112</option>
+                <option value="Psalm113" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm113m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm113m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm113m.mp3">Psalm 113</option>
+                <option value="Psalm114" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm114m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm114m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm114m.mp3">Psalm 114</option>
+                <option value="Psalm115" data-verses="10" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm115m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm115m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm115m.mp3">Psalm 115</option>
+                <option value="Psalm116" data-verses="12" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm116m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm116m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm116m.mp3">Psalm 116</option>
+                <option value="Psalm117" data-verses="1" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm117m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm117m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm117m.mp3">Psalm 117</option>
+                <option value="Psalm118" data-verses="20" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm118m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm118m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm118m.mp3">Psalm 118</option>
+                <option value="Psalm119m01" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m01.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m01.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m01.mp3">Psalm 119 Deel 1</option>
+                <option value="Psalm119m02" data-verses="4" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m02.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m02.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m02.mp3">Psalm 119 Deel 2</option>
+                <option value="Psalm119m03" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m03.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m03.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m03.mp3">Psalm 119 Deel 3</option>
+                <option value="Psalm119m04" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m04.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m04.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m04.mp3">Psalm 119 Deel 4</option>
+                <option value="Psalm119m05" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m05.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m05.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m05.mp3">Psalm 119 Deel 5</option>
+                <option value="Psalm119m06" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m06.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m06.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m06.mp3">Psalm 119 Deel 6</option>
+                <option value="Psalm119m07" data-verses="2" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m07.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m07.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m07.mp3">Psalm 119 Deel 7</option>
+                <option value="Psalm119m08" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m08.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m08.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m08.mp3">Psalm 119 Deel 8</option>
+                <option value="Psalm119m09" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m09.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m09.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m09.mp3">Psalm 119 Deel 9</option>
+                <option value="Psalm119m10" data-verses="8" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m10.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m10.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m10.mp3">Psalm 119 Deel 10</option>
+                <option value="Psalm119m11" data-verses="7" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m11.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m11.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m11.mp3">Psalm 119 Deel 11</option>
+                <option value="Psalm119m12" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m12.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m12.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m12.mp3">Psalm 119 Deel 12</option>
+                <option value="Psalm119m13" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m13.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m13.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m13.mp3">Psalm 119 Deel 13</option>
+                <option value="Psalm119m14" data-verses="3" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m14.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m14.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m14.mp3">Psalm 119 Deel 14</option>
+                <option value="Psalm119m15" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m15.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m15.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m15.mp3">Psalm 119 Deel 15</option>
+                <option value="Psalm119m16" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m16.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m16.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m16.mp3">Psalm 119 Deel 16</option>
+                <option value="Psalm119m17" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m17.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m17.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m17.mp3">Psalm 119 Deel 17</option>
+                <option value="Psalm119m18" data-verses="3" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m18.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m18.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m18.mp3">Psalm 119 Deel 18</option>
+                <option value="Psalm119m19" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m19.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m19.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m19.mp3">Psalm 119 Deel 19</option>
+                <option value="Psalm119m20" data-verses="3" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m20.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m20.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m20.mp3">Psalm 119 Deel 20</option>
+                <option value="Psalm119m21" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m21.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m21.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m21.mp3">Psalm 119 Deel 21</option>
+                <option value="Psalm119m22" data-verses="3" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m22.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm119m22.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm119m22.mp3">Psalm 119 Deel 22</option>
+                <option value="Psalm120" data-verses="4" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm120m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm120m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm120m.mp3">Psalm 120</option>
+                <option value="Psalm121" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm121m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm121m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm121m.mp3">Psalm 121</option>
+                <option value="Psalm122" data-verses="7" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm122m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm122m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm122m.mp3">Psalm 122</option>
+                <option value="Psalm123" data-verses="4" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm123m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm123m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm123m.mp3">Psalm 123</option>
+                <option value="Psalm124" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm124m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm124m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm124m.mp3">Psalm 124</option>
+                <option value="Psalm125" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm125m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm125m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm125m.mp3">Psalm 125</option>
+                <option value="Psalm126" data-verses="4" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm126m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm126m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm126m.mp3">Psalm 126</option>
+                <option value="Psalm127" data-verses="4" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm127m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm127m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm127m.mp3">Psalm 127</option>
+                <option value="Psalm128" data-verses="4" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm128m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm128m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm128m.mp3">Psalm 128</option>
+                <option value="Psalm129" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm129m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm129m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm129m.mp3">Psalm 129</option>
+                <option value="Psalm130" data-verses="5" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm130m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm130m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm130m.mp3">Psalm 130</option>
+                <option value="Psalm131" data-verses="3" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm131m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm131m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm131m.mp3">Psalm 131</option>
+                <option value="Psalm132" data-verses="13" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm132m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm132m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm132m.mp3">Psalm 132</option>
+                <option value="Psalm133" data-verses="3" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm133m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm133m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm133m.mp3">Psalm 133</option>
+                <option value="Psalm134" data-verses="2" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm134m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm134m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm134m.mp3">Psalm 134</option>
+                <option value="Psalm135" data-verses="16" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm135m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm135m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm135m.mp3">Psalm 135</option>
+                <option value="Psalm136" data-verses="13" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm136m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm136m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm136m.mp3">Psalm 136</option>
+                <option value="Psalm137" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm137m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm137m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm137m.mp3">Psalm 137</option>
+                <option value="Psalm138" data-verses="8" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm138m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm138m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm138m.mp3">Psalm 138</option>
+                <option value="Psalm139" data-verses="19" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm139m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm139m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm139m.mp3">Psalm 139</option>
+                <option value="Psalm140" data-verses="12" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm140m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm140m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm140m.mp3">Psalm 140</option>
+                <option value="Psalm141" data-verses="11" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm141m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm141m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm141m.mp3">Psalm 141</option>
+                <option value="Psalm142" data-verses="6" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm142m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm142m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm142m.mp3">Psalm 142</option>
+                <option value="Psalm143" data-verses="11" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm143m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm143m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm143m.mp3">Psalm 143</option>
+                <option value="Psalm144" data-verses="13" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm144m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm144m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm144m.mp3">Psalm 144</option>
+                <option value="Psalm145" data-verses="16" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm145m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm145m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm145m.mp3">Psalm 145</option>
+                <option value="Psalm146" data-verses="8" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm146m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm146m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm146m.mp3">Psalm 146</option>
+                <option value="Psalm147" data-verses="7" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm147m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm147m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm147m.mp3">Psalm 147</option>
+                <option value="Psalm148" data-verses="9" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm148m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm148m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm148m.mp3">Psalm 148</option>
+                <option value="Psalm149" data-verses="9" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm149m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm149m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm149m.mp3">Psalm 149</option>
+                <option value="Psalm150" data-verses="2" data-text-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm150m.txt"  data-score-url="https://www.psalms.co.za/wp-content/uploads/scores/Psalm150m.png"  data-audio-url="https://www.psalms.co.za/wp-content/uploads/mp3/Psalm150m.mp3">Psalm 150</option>
+           </select>
+            <br>
+            <label for="metriese-repeats">Hoeveelheid verse om te sing (Maksimum: <span id="metriese-max-verses">0</span>):</label>
+            <input type="number" id="metriese-repeats" min="1" max="0" value="1">
+            <br>
+            <button onclick="playMetriesePsalm()">Speel Psalm</button>
+            <br>
+            <audio id="metriese-psalm-audio" controls></audio>
+            <div id="metriese-error-message" class="error-message"></div>
+            <img id="metriese-psalm-score" class="psalm-score" alt="Psalm Score">
+            <div id="metriese-psalm-text" class="psalm-text"></div>
+        </div>
+    </div>
+
+    <script>
+        // Metriese Psalms Player Logic
+        let metrieseCurrentRepeats = 0;
+        let metrieseTotalRepeats = 0;
+        let metrieseCanPlay = false;
+        let isPlaybackAttempted = false;
+
+        const metrieseAudio        = document.getElementById('metriese-psalm-audio');
+        const metrieseErrorMessage = document.getElementById('metriese-error-message');
+        const metriesePsalmText    = document.getElementById('metriese-psalm-text');
+        const metriesePsalmScore   = document.getElementById('metriese-psalm-score');
+        const metriesePsalmSelect  = document.getElementById('metriese-psalm-select');
+        const metrieseRepeatsInput = document.getElementById('metriese-repeats');
+        const metrieseMaxVersesSpan = document.getElementById('metriese-max-verses');
+
+        function showMetrieseError(message) {
+            metrieseErrorMessage.style.display = 'block';
+            metrieseErrorMessage.textContent = message;
+            console.error('Metriese:', message);
+        }
+
+        function clearMetrieseError() {
+            metrieseErrorMessage.style.display = 'none';
+            metrieseErrorMessage.textContent = '';
+        }
+
+        function updateMetrieseMaxVerses() {
+            const selectedOption = metriesePsalmSelect.options[metriesePsalmSelect.selectedIndex];
+            const maxVerses = selectedOption ? parseInt(selectedOption.getAttribute('data-verses')) : 0;
+            metrieseRepeatsInput.setAttribute('max', maxVerses);
+            metrieseMaxVersesSpan.textContent = maxVerses;
+
+            if (metrieseRepeatsInput.value > maxVerses && maxVerses > 0) {
+                metrieseRepeatsInput.value = maxVerses;
+            }
+        }
+
+        function displayMetriesePsalmContent() {
+            const selectedOption = metriesePsalmSelect.options[metriesePsalmSelect.selectedIndex];
+            const textUrl  = selectedOption?.getAttribute('data-text-url')  || '';
+            const scoreUrl = selectedOption?.getAttribute('data-score-url') || '';
+
+            // Reset content
+            metriesePsalmText.textContent = 'Laai teks...';
+            metriesePsalmScore.style.display = 'none';
+            metriesePsalmScore.src = '';
+            clearMetrieseError();
+
+            // Psalm text
+            if (textUrl) {
+                fetch(textUrl, { method: 'GET', mode: 'cors' })
+                    .then(response => {
+                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                        return response.text();
+                    })
+                    .then(data => {
+                        metriesePsalmText.textContent = data || 'Geen teks beskikbaar nie.';
+                    })
+                    .catch(err => {
+                        console.error('Text fetch error:', err);
+                        showMetrieseError('Fout met psalmteks: ' + err.message);
+                        metriesePsalmText.textContent = 'Kon nie teks laai nie.';
+                    });
+            } else {
+                metriesePsalmText.textContent = 'Geen teks beskikbaar vir hierdie psalm nie.';
+            }
+
+            // Psalm score
+            if (scoreUrl) {
+                metriesePsalmScore.src = scoreUrl;
+                metriesePsalmScore.style.display = 'block';
+
+                fetch(scoreUrl, { method: 'HEAD', mode: 'cors' })
+                    .then(r => {
+                        if (!r.ok) throw new Error(`Score HTTP ${r.status}`);
+                    })
+                    .catch(err => {
+                        console.error('Score fetch error:', err);
+                        showMetrieseError('Kan nie partituur laai nie: ' + err.message);
+                        metriesePsalmScore.style.display = 'none';
+                        metriesePsalmScore.src = '';
+                    });
+            } else {
+                metriesePsalmScore.style.display = 'none';
+            }
+        }
+
+        function playMetriesePsalm() {
+            clearMetrieseError();
+
+            const selectedOption = metriesePsalmSelect.options[metriesePsalmSelect.selectedIndex];
+            const audioUrl = selectedOption?.getAttribute('data-audio-url') || '';
+
+            const repeats = parseInt(metrieseRepeatsInput.value);
+
+            if (!audioUrl) {
+                showMetrieseError('Kies asseblief \'n Psalm met geldige oudio.');
+                return;
+            }
+            if (isNaN(repeats) || repeats < 1) {
+                showMetrieseError('Voer asseblief \'n geldige aantal verse in.');
+                return;
+            }
+
+            const maxVerses = parseInt(selectedOption.getAttribute('data-verses'));
+            if (repeats > maxVerses) {
+                showMetrieseError(`Jy kan maksimum ${maxVerses} verse kies vir hierdie psalm.`);
+                return;
+            }
+
+            console.log('Loading audio:', audioUrl);
+
+            isPlaybackAttempted = true;
+            metrieseAudio.src = audioUrl;
+
+            metrieseCurrentRepeats = 0;
+            metrieseTotalRepeats = repeats;
+            metrieseCanPlay = false;
+
+            // Check if file exists + try play
+            fetch(audioUrl, { method: 'HEAD', mode: 'cors' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Audio HTTP ${response.status}`);
+                    }
+                    metrieseAudio.load();
+                    return metrieseAudio.play();
+                })
+                .then(() => {
+                    metrieseCanPlay = true;
+                    console.log('Playback started');
+                    clearMetrieseError();
+                })
+                .catch(error => {
+                    console.error('Playback / availability error:', error);
+                    showMetrieseError('Kon nie oudio speel nie: ' + error.message);
+                    isPlaybackAttempted = false;
+                });
+        }
+
+        metrieseAudio.addEventListener('error', function() {
+            if (isPlaybackAttempted && !metrieseCanPlay && metrieseAudio.src) {
+                const code = metrieseAudio.error?.code;
+                let msg = 'Oudio fout – onbekende probleem.';
+                if (code === 4) msg = 'Lêer word nie ondersteun of bestaan nie.';
+                else if (code === 3) msg = 'Dekodeer fout.';
+                else if (code === 2) msg = 'Netwerk probleem.';
+                showMetrieseError(msg);
+            }
+        });
+
+        metrieseAudio.addEventListener('canplay', () => {
+            metrieseCanPlay = true;
+            clearMetrieseError();
+        });
+
+metrieseAudio.addEventListener('ended', function() {
+    metrieseCurrentRepeats++;
+
+    if (metrieseCurrentRepeats < metrieseTotalRepeats) {
+        // 1 second = 1000 milliseconds
+        setTimeout(() => {
+            this.currentTime = 0;
+            this.play().catch(err => {
+                showMetrieseError('Herhaal fout: ' + err.message);
+            });
+        }, 0); //verander 0 na millisekondes om tyd tussen verse te verander
+    } else {
+        isPlaybackAttempted = false;
+    }
+});
+
+        metriesePsalmSelect.addEventListener('change', function() {
+            clearMetrieseError();
+            metrieseAudio.pause();
+            metrieseAudio.currentTime = 0;
+            metrieseAudio.src = '';
+            metrieseCurrentRepeats = 0;
+            metrieseCanPlay = false;
+            isPlaybackAttempted = false;
+
+            updateMetrieseMaxVerses();
+            displayMetriesePsalmContent();
+        });
+
+        // Initial setup
+        updateMetrieseMaxVerses();
+        displayMetriesePsalmContent();
+    </script>
+</body>
+</html>
