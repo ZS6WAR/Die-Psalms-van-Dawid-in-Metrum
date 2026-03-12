@@ -1,5 +1,8 @@
 # Die-Psalms-van-Dawid-in-Metrum
 
+Volg die skakel na die voorlegging vir Die Psalms van Dawid in Metrum:
+https://youtu.be/Id5jU2ESSa8?si=cMxhNpMVN4p4Bneq
+
 Alle regte voorbehou — behalwe soos hieronder uitdruklik toegestaan.
 
 Hierdie werk mag vrylik gekopieer, versprei, gedruk, elektronies versprei, herpubliseer, en in eredienste gebruik word, onder die volgende voorwaardes:
